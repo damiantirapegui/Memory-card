@@ -1,4 +1,6 @@
 const fronts = document.querySelectorAll(".memory-card");
+const overlay = document.querySelector(".overlay");
+const closeOverlay = document.querySelector(".close");
 let flippedCards: HTMLElement[] = [];
 
 fronts.forEach((element) => {
@@ -26,14 +28,33 @@ fronts.forEach((element) => {
         }, 1000);
       }
     }
+    flippedCardDeck();
   });
 });
 
-// If sats för att kontrollera att Arrayen innehåller 2 kort.
-// Desctructa båda korten som hamnar i arrayen.
-// Lägg ett värde på varsit kort. TIPS använd dataset.
+const flippedCardDeck = () => {
+  let cardDeck: HTMLElement[] = Array.from(fronts) as HTMLElement[];
 
-// Nestla if sats som kontrollerar att korten matchar.
-// Om dem matchar då ska du tömma arreyen för att lägga till 2 nya kort.
-// Annars om dem inte matchar då kan du ta bort (remove )card1 och card 2.
-// Glöm inte att tömma arrayen här också för att börja om
+  console.log(cardDeck);
+
+  const allFlippedCards = cardDeck.every((card) =>
+    card.classList.contains("flip")
+  );
+
+  if (allFlippedCards) {
+    console.log("you won");
+    if (overlay) {
+      (overlay as HTMLElement).style.display = "block";
+
+      closeOverlay.addEventListener("click", () => {
+        (overlay as HTMLElement).style.display = "none";
+        if (closeOverlay) {
+          location.reload();
+        }
+      });
+    }
+  }
+};
+
+// Om hela kortleken har klassen flipped då du vunnit.
+// Vi behöver kontrollera först hela arrayen där alla kort finns
